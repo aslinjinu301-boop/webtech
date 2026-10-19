@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AJAX Student Information</title>
+
+    <script>
+        function loadStudent() {
+
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                    var xmlDoc = xmlhttp.responseXML;
+
+                    var name =
+                        xmlDoc.getElementsByTagName("name")[0].textContent;
+
+                    var regno =
+                        xmlDoc.getElementsByTagName("regno")[0].textContent;
+
+                    var department =
+                        xmlDoc.getElementsByTagName("department")[0].textContent;
+
+                    var year =
+                        xmlDoc.getElementsByTagName("year")[0].textContent;
+
+                    document.getElementById("result").innerHTML =
+                        "<h3>Student Details</h3>" +
+                        "<b>Name:</b> " + name + "<br>" +
+                        "<b>Register Number:</b> " + regno + "<br>" +
+                        "<b>Department:</b> " + department + "<br>" +
+                        "<b>Year:</b> " + year;
+                }
+            };
+
+            var xmlData =
+                '<?xml version="1.0"?>' +
+                '<student>' +
+                '<name>Aslin Jinu</name>' +
+                '<regno>12345</regno>' +
+                '<department>AI &amp; DS</department>' +
+                '<year>2nd Year</year>' +
+                '</student>';
+
+            var url =
+                "data:text/xml;charset=utf-8," +
+                encodeURIComponent(xmlData);
+
+            xmlhttp.open("GET", url, true);
+
+            xmlhttp.send();
+        }
+    </script>
+
+</head>
+
+<body>
+
+<h2>AJAX Student Information</h2>
+
+<p>
+Click the button to retrieve student information without
+reloading the entire web page.
+</p>
+
+<button onclick="loadStudent()">
+    Get Student Details
+</button>
+
+<br><br>
+
+<div id="result">
+    Student information will appear here.
+</div>
+
+</body>
+
+</html>
